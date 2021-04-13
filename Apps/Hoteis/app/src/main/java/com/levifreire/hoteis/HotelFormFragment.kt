@@ -81,10 +81,10 @@ class HotelFormFragment : DialogFragment(), HotelFormView {
         hotel.name = fragmentHotelFormBinding?.edtName?.text.toString()
         hotel.address = fragmentHotelFormBinding?.edtAddress?.text.toString()
         hotel.rating = fragmentHotelFormBinding?.rtbRating?.rating!!
-        if (presenter.saveHotel(hotel)) {
-            return hotel
+        return if (presenter.saveHotel(hotel)) {
+            hotel
         } else {
-            return null
+            null
         }
     }
 
