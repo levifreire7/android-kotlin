@@ -5,6 +5,16 @@ class HotelListPresenter(private val view: HotelListView, private val repository
     private var inDeleteMode = false
     private val selectedItems = mutableListOf<Hotel>()
 
+    fun init() {
+        if (inDeleteMode) {
+            showDeleteMode()
+            view.updateSelectionCountText(selectedItems.size)
+            view.showSelectedHotels(selectedItems)
+        } else {
+            refresh()
+        }
+    }
+
     fun searchHotels(term: String) {
         lastTerm = term
         repository.search(term) { hotels ->
@@ -50,7 +60,7 @@ class HotelListPresenter(private val view: HotelListView, private val repository
         view.hideDeleteMode()
     }
 
-    fun refresh() {
+    private fun refresh() {
         searchHotels(lastTerm)
     }
 

@@ -18,12 +18,14 @@ class HotelListFragment : ListFragment(), HotelListView, AdapterView.OnItemLongC
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.searchHotels("")
+        retainInstance = true
+        presenter.init()
         listView.onItemLongClickListener = this
     }
 
     override fun showHotels(hotels: List<Hotel>) {
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_activated_1, hotels)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_activated_1, hotels)
         listAdapter = adapter
     }
 
@@ -42,7 +44,7 @@ class HotelListFragment : ListFragment(), HotelListView, AdapterView.OnItemLongC
     }
 
     override fun hideDeleteMode() {
-        listView.onItemLongClickListener = null
+        listView.onItemLongClickListener = this
         for (i in 0 until listView.count) {
             listView.setItemChecked(i, false)
         }
