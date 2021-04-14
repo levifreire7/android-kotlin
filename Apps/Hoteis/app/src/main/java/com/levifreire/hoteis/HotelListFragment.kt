@@ -10,6 +10,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.ListFragment
+import com.google.android.material.snackbar.Snackbar
 
 class HotelListFragment : ListFragment(), HotelListView, AdapterView.OnItemLongClickListener,
     ActionMode.Callback {
@@ -70,6 +71,16 @@ class HotelListFragment : ListFragment(), HotelListView, AdapterView.OnItemLongC
             actionMode?.title =
                 resources.getQuantityString(R.plurals.list_hotel_selected, count, count)
         }
+    }
+
+    override fun showMessageHotelsDeleted(count: Int) {
+        Snackbar.make(
+            listView,
+            getString(R.string.message_hotels_deleted, count),
+            Snackbar.LENGTH_LONG
+        ).setAction(R.string.undo) {
+            presenter.undoDelete()
+        }.show()
     }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {

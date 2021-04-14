@@ -102,11 +102,6 @@ class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener
         return true
     }
 
-    companion object {
-        const val EXTRA_SEARCH_TERM = "lastSearch"
-        const val EXTRA_HOTEL_ID_SELECTED = "lastSelectedID"
-    }
-
     override fun onHotelSaved(hotel: Hotel) {
         listFragment.search(lastSearchTerm)
     }
@@ -122,5 +117,10 @@ class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener
                     .commit()
             }
         }
+    }
+
+    companion object {
+        const val EXTRA_SEARCH_TERM = "lastSearch"
+        const val EXTRA_HOTEL_ID_SELECTED = "lastSelectedID"
     }
 }
