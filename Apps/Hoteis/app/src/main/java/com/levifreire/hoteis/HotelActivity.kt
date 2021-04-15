@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import com.levifreire.hoteis.databinding.ActivityHotelBinding
 
 class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener,
     SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener,
@@ -15,10 +16,18 @@ class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener
     private var searchView: SearchView? = null
     private val listFragment: HotelListFragment by lazy { supportFragmentManager.findFragmentById(R.id.fragmentList) as HotelListFragment }
     private var hotelIdSelected: Long = -1
+    private lateinit var binding: ActivityHotelBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hotel)
+        binding = ActivityHotelBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.fabAdd.setOnClickListener {
+            listFragment.hideDeleteMode()
+            HotelFormFragment.newInstance().open(supportFragmentManager)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -80,8 +89,6 @@ class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener
         when (item.itemId) {
             R.id.action_info ->
                 AboutDialogFragment().show(supportFragmentManager, "sobre")
-            R.id.action_new ->
-                HotelFormFragment.newInstance().open(supportFragmentManager)
         }
         return super.onOptionsItemSelected(item)
     }
