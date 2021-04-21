@@ -32,6 +32,14 @@ class TaskListFragment : ListFragment(), TaskListView {
         presenter.showTaskDetails(task)
     }
 
+    fun search(text: String) {
+        presenter.search(text)
+    }
+
+    fun clearSearch() {
+        presenter.search("")
+    }
+
     interface OnTaskClickListener {
         fun onTaskClick(task: Task)
     }

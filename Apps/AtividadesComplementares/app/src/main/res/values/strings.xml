@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Atividades Complementares</string>
     <string name="error_task_not_found">Atividade não encontrada</string>
+    <string name="action_search">Pesquisar</string>
+    <string name="action_new_task">Nova atividade</string>
+    <string name="action_info">Info</string>
+    <string name="hint_search">Procurar por atividade</string>
 </resources>
