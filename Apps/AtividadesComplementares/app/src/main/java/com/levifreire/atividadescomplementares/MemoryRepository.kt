@@ -9,127 +9,37 @@ object MemoryRepository : TaskRepository {
             Task(
                 0,
                 "Palestra Inteligencia Artifical",
-                "21/03/2021 14:30",
+                "21/03/2021",
+                "14:30",
                 "Auditório",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed urna luctus magna volutpat dictum. Pellentesque turpis lectus, placerat ut.",
-                "Extra",
+                "Cultura",
                 2
             )
         )
         save(
             Task(
                 0,
-                "Reunião Inteligencia Artifical",
-                "21/03/2021 14:30",
+                "Palestra Meio Ambiente",
+                "21/03/2021",
+                "14:30",
                 "Auditório",
-                "-",
-                "Extra",
-                2
-            )
-        )
-        save(
-            Task(
-                0,
-                "Idioma Inteligencia Artifical",
-                "21/03/2021 14:30",
-                "Auditório",
-                "-",
-                "Extra",
-                2
-            )
-        )
-        save(
-            Task(
-                0,
-                "Atividade Inteligencia Artifical",
-                "21/03/2021 14:30",
-                "Auditório",
-                "-",
-                "Extra",
-                2
-            )
-        )
-        save(
-            Task(
-                0,
-                "Exercicio Inteligencia Artifical",
-                "21/03/2021 14:30",
-                "Auditório",
-                "-",
-                "Extra",
-                2
-            )
-        )
-        save(
-            Task(
-                0,
-                "Rotina Inteligencia Artifical",
-                "21/03/2021 14:30",
-                "Auditório",
-                "-",
-                "Extra",
-                2
-            )
-        )
-        save(
-            Task(
-                0,
-                "Apresentação Inteligencia Artifical",
-                "21/03/2021 14:30",
-                "Auditório",
-                "-",
-                "Extra",
-                2
-            )
-        )
-        save(
-            Task(
-                0,
-                "Seminário Inteligencia Artifical",
-                "21/03/2021 14:30",
-                "Auditório",
-                "-",
-                "Extra",
-                2
-            )
-        )
-        save(
-            Task(
-                0,
-                "Palestra Inteligencia Artifical",
-                "21/03/2021 14:30",
-                "Auditório",
-                "-",
-                "Extra",
-                2
-            )
-        )
-        save(
-            Task(
-                0,
-                "Palestra Inteligencia Artifical",
-                "21/03/2021 14:30",
-                "Auditório",
-                "-",
-                "Extra",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed urna luctus magna volutpat dictum. Pellentesque turpis lectus, placerat ut.",
+                "Lazer",
                 2
             )
         )
     }
 
     override fun save(task: Task) {
-        task.id = nextId++
-        tasksList.add(task)
-    }
-
-    override fun update(task: Task): Boolean {
         val index = tasksList.indexOfFirst { it.id == task.id }
 
         if (index != -1) {
             tasksList[index] = task
-            return true
+        } else {
+            task.id = nextId++
+            tasksList.add(task)
         }
-        return false
     }
 
     override fun delete(vararg task: Task) {

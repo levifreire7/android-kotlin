@@ -5,4 +5,14 @@
     <string name="action_new_task">Nova atividade</string>
     <string name="action_info">Info</string>
     <string name="hint_search">Procurar por atividade</string>
+    <string name="about_title">Atividades Complementares</string>
+    <string name="about_message">Desenvolvido por Levi Freire</string>
+    <string name="about_button_site">Site</string>
+    <string name="form_label_title">Título</string>
+    <string name="data">Data</string>
+    <string name="time">Hora</string>
+    <string name="local">Local</string>
+    <string name="description">Descrição</string>
+    <string name="workload">Carga horária</string>
+    <string name="error_invalid_task">Preencha todos os campos corretamente</string>
 </resources>

@@ -25,7 +25,7 @@
         tools:text="Seminário sobre Integência Artificial" />
 
     <TextView
-        android:id="@+id/txtLabelDateTime"
+        android:id="@+id/txtLabelDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -35,13 +35,32 @@
         app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
     <TextView
-        android:id="@+id/txtDateTime"
+        android:id="@+id/txtDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtLabelDateTime"
-        tools:text="16/04/2021 16:10" />
+        app:layout_constraintTop_toBottomOf="@id/txtLabelDate"
+        tools:text="16/04/2021" />
+
+    <TextView
+        android:id="@+id/txtLabelTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Hora:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtDate" />
+
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtLabelTime"
+        tools:text="16:10" />
 
     <TextView
         android:id="@+id/txtLabelLocal"
@@ -51,7 +70,7 @@
         android:text="Local:"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtDateTime" />
+        app:layout_constraintTop_toBottomOf="@id/txtTime" />
 
     <TextView
         android:id="@+id/txtLocal"

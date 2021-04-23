@@ -36,7 +36,8 @@ class TaskDetailsFragment : Fragment(), TaskDetailsView {
     override fun showTaskDetails(task: Task) {
         this.task = task
         taskDetailsBinding?.txtTitle?.text = task.title
-        taskDetailsBinding?.txtDateTime?.text = task.dateTime
+        taskDetailsBinding?.txtDate?.text = task.date
+        taskDetailsBinding?.txtTime?.text = task.time
         taskDetailsBinding?.txtLocal?.text = task.local
         taskDetailsBinding?.txtDescription?.text = task.description
         taskDetailsBinding?.txtCategory?.text = task.category
@@ -45,14 +46,16 @@ class TaskDetailsFragment : Fragment(), TaskDetailsView {
 
     override fun errorTaskNotFound() {
         taskDetailsBinding?.txtLabelTitle?.text = getString(R.string.error_task_not_found)
-        taskDetailsBinding?.txtLabelDateTime?.visibility = View.GONE
+        taskDetailsBinding?.txtLabelDate?.visibility = View.GONE
+        taskDetailsBinding?.txtLabelTime?.visibility = View.GONE
         taskDetailsBinding?.txtLabelLocal?.visibility = View.GONE
         taskDetailsBinding?.txtLabelDescription?.visibility = View.GONE
         taskDetailsBinding?.txtLabelCategory?.visibility = View.GONE
         taskDetailsBinding?.txtLabelWorkload?.visibility = View.GONE
 
         taskDetailsBinding?.txtTitle?.visibility = View.GONE
-        taskDetailsBinding?.txtDateTime?.visibility = View.GONE
+        taskDetailsBinding?.txtDate?.visibility = View.GONE
+        taskDetailsBinding?.txtTime?.visibility = View.GONE
         taskDetailsBinding?.txtLocal?.visibility = View.GONE
         taskDetailsBinding?.txtDescription?.visibility = View.GONE
         taskDetailsBinding?.txtCategory?.visibility = View.GONE
