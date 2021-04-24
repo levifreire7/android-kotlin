@@ -11,11 +11,13 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 
 class MainActivity : AppCompatActivity(), TaskListFragment.OnTaskClickListener,
-    SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
+    SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener,
+    TaskListFragment.OnTaskDeletedListener {
 
     private var lastSearchTerm: String = ""
     private var searchView: SearchView? = null
     private val listFragment: TaskListFragment by lazy { supportFragmentManager.findFragmentById(R.id.fragmentList) as TaskListFragment }
+    private var taskIdSelected: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,18 +27,33 @@ class MainActivity : AppCompatActivity(), TaskListFragment.OnTaskClickListener,
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(SEARCH_TERM, lastSearchTerm)
+        outState.putInt(TASK_ID_SELECTED, taskIdSelected)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         lastSearchTerm = savedInstanceState.getString(SEARCH_TERM) ?: ""
+        taskIdSelected = savedInstanceState.getInt(TASK_ID_SELECTED) ?: 0
     }
 
     override fun onTaskClick(task: Task) {
         if (isTablet()) {
+            taskIdSelected = task.id
             showDetailsFragment(task.id)
         } else {
             showDetailsActivity(task.id)
+        }
+    }
+
+    override fun onTasksDeleted(tasks: List<Task>) {
+        if (tasks.find { it.id == taskIdSelected } != null) {
+            val fragment = supportFragmentManager.findFragmentByTag(TaskDetailsFragment.TAG_DETAILS)
+            if (fragment != null) {
+                supportFragmentManager
+                    .beginTransaction()
+                    .remove(fragment)
+                    .commit()
+            }
         }
     }
 
@@ -100,5 +117,6 @@ class MainActivity : AppCompatActivity(), TaskListFragment.OnTaskClickListener,
 
     companion object {
         const val SEARCH_TERM = "lastSearch"
+        const val TASK_ID_SELECTED = "lastSelectedId"
     }
 }

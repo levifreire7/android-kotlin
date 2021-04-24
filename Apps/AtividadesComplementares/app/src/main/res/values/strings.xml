@@ -15,4 +15,9 @@
     <string name="description">Descrição</string>
     <string name="workload">Carga horária</string>
     <string name="error_invalid_task">Preencha todos os campos corretamente</string>
+    <string name="action_delete">Excluir</string>
+    <plurals name="list_task_selected">
+        <item quantity="one">1 selecionado</item>
+        <item quantity="other">%d selecionados</item>
+    </plurals>
 </resources>
