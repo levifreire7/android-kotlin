@@ -7,4 +7,5 @@ interface TaskListView {
     fun hideDeleteMode()
     fun showSelectedTasks(tasks: List<Task>)
     fun updateSelectionCountText(count: Int)
+    fun showMessageTasksDeleted(count: Int)
 }

@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import com.levifreire.atividadescomplementares.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), TaskListFragment.OnTaskClickListener,
     SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener,
@@ -18,10 +19,18 @@ class MainActivity : AppCompatActivity(), TaskListFragment.OnTaskClickListener,
     private var searchView: SearchView? = null
     private val listFragment: TaskListFragment by lazy { supportFragmentManager.findFragmentById(R.id.fragmentList) as TaskListFragment }
     private var taskIdSelected: Int = -1
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.fabAdd.setOnClickListener {
+            listFragment.hideDeleteMode()
+            TaskFormActivity.open(this)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -94,7 +103,6 @@ class MainActivity : AppCompatActivity(), TaskListFragment.OnTaskClickListener,
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_info -> AboutDialogFragment().show(supportFragmentManager, "sobre")
-            R.id.action_new -> TaskFormActivity.open(this)
         }
         return super.onOptionsItemSelected(item)
     }

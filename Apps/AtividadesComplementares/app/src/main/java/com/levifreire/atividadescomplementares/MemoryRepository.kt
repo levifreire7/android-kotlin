@@ -29,6 +29,54 @@ object MemoryRepository : TaskRepository {
                 2
             )
         )
+        save(
+            Task(
+                0,
+                "Palestra Inteligencia Artifical",
+                "21/03/2021",
+                "14:30",
+                "Auditório",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed urna luctus magna volutpat dictum. Pellentesque turpis lectus, placerat ut.",
+                "Cultura",
+                2
+            )
+        )
+        save(
+            Task(
+                0,
+                "Palestra Meio Ambiente",
+                "21/03/2021",
+                "14:30",
+                "Auditório",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed urna luctus magna volutpat dictum. Pellentesque turpis lectus, placerat ut.",
+                "Lazer",
+                2
+            )
+        )
+        save(
+            Task(
+                0,
+                "Palestra Inteligencia Artifical",
+                "21/03/2021",
+                "14:30",
+                "Auditório",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed urna luctus magna volutpat dictum. Pellentesque turpis lectus, placerat ut.",
+                "Cultura",
+                2
+            )
+        )
+        save(
+            Task(
+                0,
+                "Palestra Meio Ambiente",
+                "21/03/2021",
+                "14:30",
+                "Auditório",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed urna luctus magna volutpat dictum. Pellentesque turpis lectus, placerat ut.",
+                "Lazer",
+                2
+            )
+        )
     }
 
     override fun save(task: Task) {
@@ -47,11 +95,12 @@ object MemoryRepository : TaskRepository {
     }
 
     override fun search(term: String): List<Task> {
-        return if (term.isEmpty()) {
+        val result = if (term.isEmpty()) {
             tasksList
         } else {
             tasksList.filter { it.title.toUpperCase().contains(term.toUpperCase()) }
         }
+        return result.sortedBy { it.title }
     }
 
     override fun findById(id: Int): Task? {

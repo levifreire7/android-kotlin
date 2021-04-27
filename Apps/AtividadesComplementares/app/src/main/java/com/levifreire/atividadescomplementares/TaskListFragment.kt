@@ -10,6 +10,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.ListFragment
+import com.google.android.material.snackbar.Snackbar
 
 class TaskListFragment : ListFragment(), TaskListView, AdapterView.OnItemLongClickListener,
     ActionMode.Callback {
@@ -18,7 +19,8 @@ class TaskListFragment : ListFragment(), TaskListView, AdapterView.OnItemLongCli
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.search("")
+        retainInstance = true
+        presenter.init()
         listView.onItemLongClickListener = this
     }
 
@@ -69,6 +71,17 @@ class TaskListFragment : ListFragment(), TaskListView, AdapterView.OnItemLongCli
             actionMode?.title =
                 resources.getQuantityString(R.plurals.list_task_selected, count, count)
         }
+    }
+
+    override fun showMessageTasksDeleted(count: Int) {
+        Snackbar.make(
+            listView,
+            resources.getQuantityString(R.plurals.message_tasks_deleted, count, count),
+            Snackbar.LENGTH_LONG
+        ).setAction(R.string.undo) {
+            presenter.undoDelete()
+        }
+            .show()
     }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {

@@ -16,6 +16,14 @@
     <string name="workload">Carga horária</string>
     <string name="error_invalid_task">Preencha todos os campos corretamente</string>
     <string name="action_delete">Excluir</string>
+    <string name="undo">Desfazer</string>
+    <string name="fab_new_task">Botão de adicionar nova atividade</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="share_text">Eu estou usando o App Atividades Complementares para me organizar melhor na faculdade. Experimente você também. É grátis! https://play.google.com/store</string>
+    <plurals name="message_tasks_deleted">
+        <item quantity="one">1 item excluído</item>
+        <item quantity="other">%d itens excluídos</item>
+    </plurals>
     <plurals name="list_task_selected">
         <item quantity="one">1 selecionado</item>
         <item quantity="other">%d selecionados</item>
