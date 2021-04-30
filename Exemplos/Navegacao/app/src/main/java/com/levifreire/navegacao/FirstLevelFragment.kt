@@ -19,7 +19,7 @@ class FirstLevelFragment : Fragment() {
         super.onCreate(savedInstanceState)
         actions[getString(R.string.option_tab)] = TabsActivity::class.java
         actions[getString(R.string.option_bottom)] = BottomNavActivity::class.java
-//        actions[getString(R.string.option_pager)] = PagerActivity::class.java
+        actions[getString(R.string.option_pager)] = PagerActivity::class.java
 
     }
 
