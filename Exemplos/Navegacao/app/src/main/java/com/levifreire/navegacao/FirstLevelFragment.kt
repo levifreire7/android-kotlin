@@ -15,13 +15,13 @@ class FirstLevelFragment : Fragment() {
     private var button: Button? = null
     private var textView: TextView? = null
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        actions[getString(R.string.option_tab)] = TabsActivity::class.java
-//        actions[getString(R.string.option_bottom)] = BottomNavActivity::class.java
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        actions[getString(R.string.option_tab)] = TabsActivity::class.java
+        actions[getString(R.string.option_bottom)] = BottomNavActivity::class.java
 //        actions[getString(R.string.option_pager)] = PagerActivity::class.java
-//
-//    }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
