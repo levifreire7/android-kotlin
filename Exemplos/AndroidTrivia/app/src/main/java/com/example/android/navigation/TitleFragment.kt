@@ -8,14 +8,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.FragmentTitleBinding
 
-class TitleFragment : Fragment() {
+class TitleFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentTitleBinding>(inflater, R.layout.fragment_title, container, false)
 
-        binding.playButton.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_titleFragment_to_gameFragment)
-        }
+        binding.playButton.setOnClickListener(this)
+        binding.rulesButton.setOnClickListener(this)
+        binding.aboutButton.setOnClickListener(this)
 
         setHasOptionsMenu(true)
 
@@ -29,5 +29,13 @@ class TitleFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) || super.onOptionsItemSelected(item)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.playButton -> view?.findNavController()?.navigate(R.id.action_titleFragment_to_gameFragment)
+            R.id.rulesButton -> view?.findNavController()?.navigate(R.id.action_titleFragment_to_rulesFragment)
+            R.id.aboutButton -> view?.findNavController()?.navigate(R.id.action_titleFragment_to_aboutFragment)
+        }
     }
 }
