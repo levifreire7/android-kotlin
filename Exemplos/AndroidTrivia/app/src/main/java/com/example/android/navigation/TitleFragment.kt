@@ -33,9 +33,9 @@ class TitleFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.playButton -> view?.findNavController()?.navigate(R.id.action_titleFragment_to_gameFragment)
-            R.id.rulesButton -> view?.findNavController()?.navigate(R.id.action_titleFragment_to_rulesFragment)
-            R.id.aboutButton -> view?.findNavController()?.navigate(R.id.action_titleFragment_to_aboutFragment)
+            R.id.playButton -> view?.findNavController()?.navigate(TitleFragmentDirections.actionTitleFragmentToGameFragment())
+            R.id.rulesButton -> view?.findNavController()?.navigate(TitleFragmentDirections.actionTitleFragmentToRulesFragment())
+            R.id.aboutButton -> view?.findNavController()?.navigate(TitleFragmentDirections.actionTitleFragmentToAboutFragment())
         }
     }
 }
