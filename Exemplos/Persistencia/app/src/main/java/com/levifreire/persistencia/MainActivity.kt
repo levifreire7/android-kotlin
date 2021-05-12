@@ -3,8 +3,10 @@ package com.levifreire.persistencia
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.text.TextUtils
 import android.util.Log
+import android.widget.Toast
 import com.levifreire.persistencia.databinding.ActivityMainBinding
 import java.io.*
 import java.lang.StringBuilder
@@ -54,18 +56,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadFromInternal() {
-        try {
-            val fis = openFileInput("arquivo.txt")
-            load(fis)
-        } catch (e: Exception) {
-            Log.e("NGVL", "Erro ao carregar o arquivo", e)
+    private fun saveToExternal(privateDir: Boolean) {
+        val state = Environment.getExternalStorageState()
+        if (Environment.MEDIA_MOUNTED == state) {
+            val myDir = getExternalDir(privateDir)
+            try {
+                if (myDir?.exists() == false) {
+                    myDir.mkdir()
+                }
+                val txtFile = File(myDir, "arquivo.txt")
+                if (!txtFile.exists()) {
+                    txtFile.createNewFile()
+                }
+                val fos = FileOutputStream(txtFile)
+                save(fos)
+            } catch (e: IOException) {
+                Toast.makeText(this, "Cartão de memória indisponível", Toast.LENGTH_LONG).show()
+                Log.d("NGVL", "Erro ao salvar arquivo", e)
+            }
+        } else {
+            Log.e("NGVL", "Não é possível escrever no SD Card")
         }
     }
-
-    private fun saveToExternal(privateDir: Boolean) {}
-
-    private fun loadFromExternal(privateDir: Boolean) {}
 
     private fun save(fos: FileOutputStream) {
         val lines = TextUtils.split(binding.edtText.text.toString(), "\n")
@@ -77,6 +89,46 @@ class MainActivity : AppCompatActivity() {
         writer.flush()
         writer.close()
         fos.close()
+    }
+
+    private fun getExternalDir(privateDir: Boolean) =
+        // SDCard/Android/data/pacote.da.app/files
+        if (privateDir) getExternalFilesDir(null)
+        // SDCard/DCIM
+        else Environment.getExternalStorageDirectory()
+
+    private fun loadFromInternal() {
+        try {
+            val fis = openFileInput("arquivo.txt")
+            load(fis)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Ainda não foi salvo nenhum arquivo", Toast.LENGTH_LONG).show()
+            Log.e("NGVL", "Erro ao carregar o arquivo", e)
+        }
+    }
+
+    private fun loadFromExternal(privateDir: Boolean) {
+        val state = Environment.getExternalStorageState()
+        if (Environment.MEDIA_MOUNTED == state ||
+            Environment.MEDIA_MOUNTED_READ_ONLY == state
+        ) {
+            val myDir = getExternalDir(privateDir)
+            if (myDir?.exists() == true) {
+                val txtFile = File(myDir, "arquivo.txt")
+                if (txtFile.exists()) {
+                    try {
+                        txtFile.createNewFile()
+                        val fis = FileInputStream(txtFile)
+                        load(fis)
+                    } catch (e: IOException) {
+                        Toast.makeText(this, "Cartão de memória indisponível", Toast.LENGTH_LONG).show()
+                        Log.d("NGVL", "Erro ao carregar arquivo", e)
+                    }
+                }
+            }
+        } else {
+            Log.e("NGVL", "SD Card indisponível")
+        }
     }
 
     private fun load(fis: FileInputStream) {
