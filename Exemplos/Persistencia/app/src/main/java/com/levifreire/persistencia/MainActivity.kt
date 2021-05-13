@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
                 val fos = FileOutputStream(txtFile)
                 save(fos)
             } catch (e: IOException) {
-                Toast.makeText(this, "Cartão de memória indisponível", Toast.LENGTH_LONG).show()
                 Log.d("NGVL", "Erro ao salvar arquivo", e)
             }
         } else {
@@ -121,7 +120,6 @@ class MainActivity : AppCompatActivity() {
                         val fis = FileInputStream(txtFile)
                         load(fis)
                     } catch (e: IOException) {
-                        Toast.makeText(this, "Cartão de memória indisponível", Toast.LENGTH_LONG).show()
                         Log.d("NGVL", "Erro ao carregar arquivo", e)
                     }
                 }
