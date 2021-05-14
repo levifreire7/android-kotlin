@@ -5,4 +5,8 @@
     <string name="rb_memoria_externa_publica">Memória Externa (Pública)</string>
     <string name="btn_salvar">Salvar</string>
     <string name="btn_ler">Ler</string>
+    <string name="message_permission_requested">Você tem que habilitar essa permissão para
+ler ou salvar o arquivo.</string>
+    <string name="permission_granted">Permissão concedida</string>
+    <string name="permission_denied">Permissão negada</string>
 </resources>

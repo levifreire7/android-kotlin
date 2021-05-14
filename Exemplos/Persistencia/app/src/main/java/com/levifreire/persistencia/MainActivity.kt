@@ -8,9 +8,14 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import com.levifreire.persistencia.databinding.ActivityMainBinding
+import permissions.dispatcher.RuntimePermissions
 import java.io.*
 import java.lang.StringBuilder
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.OnNeverAskAgain
+import permissions.dispatcher.OnPermissionDenied
 
+@RuntimePermissions
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -29,12 +34,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        onRequestPermissionsResult(requestCode, grantResults)
+    }
+
+    @OnPermissionDenied(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun showDeniedForExternal() {
+        Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show()
+    }
+
     private fun btnReadClick() {
         val type = binding.rgType.checkedRadioButtonId
         when (type) {
             R.id.rbInternal -> loadFromInternal()
-            R.id.rbExternalPriv -> loadFromExternal(true)
-            R.id.rbExternalPublic -> loadFromExternal(false)
+            R.id.rbExternalPriv -> loadFromExternalWithPermissionCheck(true)
+            R.id.rbExternalPublic -> loadFromExternalWithPermissionCheck(false)
         }
     }
 
@@ -42,8 +60,8 @@ class MainActivity : AppCompatActivity() {
         val type = binding.rgType.checkedRadioButtonId
         when (type) {
             R.id.rbInternal -> saveToInternal()
-            R.id.rbExternalPriv -> saveToExternal(true)
-            R.id.rbExternalPublic -> saveToExternal(false)
+            R.id.rbExternalPriv -> saveToExternalWithPermissionCheck(true)
+            R.id.rbExternalPublic -> saveToExternalWithPermissionCheck(false)
         }
     }
 
@@ -51,12 +69,14 @@ class MainActivity : AppCompatActivity() {
         try {
             val fos = openFileOutput("arquivo.txt", Context.MODE_PRIVATE)
             save(fos)
+            binding.edtText.setText("")
         } catch (e: Exception) {
             Log.e("NGVL", "Erro ao salvar o arquivo", e)
         }
     }
 
-    private fun saveToExternal(privateDir: Boolean) {
+    @NeedsPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun saveToExternal(privateDir: Boolean) {
         val state = Environment.getExternalStorageState()
         if (Environment.MEDIA_MOUNTED == state) {
             val myDir = getExternalDir(privateDir)
@@ -70,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 val fos = FileOutputStream(txtFile)
                 save(fos)
+                binding.edtText.setText("")
             } catch (e: IOException) {
                 Log.d("NGVL", "Erro ao salvar arquivo", e)
             }
@@ -106,7 +127,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadFromExternal(privateDir: Boolean) {
+    @NeedsPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    fun loadFromExternal(privateDir: Boolean) {
         val state = Environment.getExternalStorageState()
         if (Environment.MEDIA_MOUNTED == state ||
             Environment.MEDIA_MOUNTED_READ_ONLY == state
