@@ -1,6 +1,8 @@
 package com.levifreire.persistencia
 
+import android.app.Activity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.*
 
 class ConfigFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
@@ -11,6 +13,7 @@ class ConfigFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChange
         setPreferencesFromResource(R.xml.app_preferences, null)
         editPrefCity = findPreference(getString(R.string.pref_city))!!
         listPrefSocialNetworks = findPreference(getString(R.string.pref_social_network))!!
+
         fillSummary(editPrefCity)
         fillSummary(listPrefSocialNetworks)
     }
