@@ -1,4 +1,7 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.list
+
+import com.levifreire.hoteis.model.Hotel
+import com.levifreire.hoteis.repository.HotelRepository
 
 class HotelListPresenter(private val view: HotelListView, private val repository: HotelRepository) {
     private var lastTerm = ""

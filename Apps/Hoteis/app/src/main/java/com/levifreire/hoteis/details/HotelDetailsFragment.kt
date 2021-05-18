@@ -1,4 +1,4 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.details
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,9 @@ import android.view.*
 import androidx.appcompat.widget.ShareActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
+import com.levifreire.hoteis.model.Hotel
+import com.levifreire.hoteis.repository.memory.MemoryRepository
+import com.levifreire.hoteis.R
 import com.levifreire.hoteis.databinding.FragmentHotelDetailsBinding
 
 class HotelDetailsFragment : Fragment(), HotelDetailsView {

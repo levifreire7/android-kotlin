@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fragments">
         <activity
-            android:name="com.levifreire.hoteis.HotelDetailsActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:name="com.levifreire.hoteis.details.HotelDetailsActivity"
+            android:parentActivityName=".common.MainActivity"></activity>
         <activity
-            android:name="com.levifreire.hoteis.MainActivity"
+            android:name="com.levifreire.hoteis.common.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

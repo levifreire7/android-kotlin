@@ -1,4 +1,4 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.model
 
 data class Hotel(
     var id: Long = 0,

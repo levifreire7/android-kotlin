@@ -1,4 +1,7 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.form
+
+import com.levifreire.hoteis.model.Hotel
+import com.levifreire.hoteis.repository.HotelRepository
 
 class HotelFormPresenter(private val view: HotelFormView, private val repository: HotelRepository) {
     private val validator = HotelValidator()

@@ -1,4 +1,4 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.list
 
 import android.os.Bundle
 import android.view.Menu
@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.ListFragment
 import com.google.android.material.snackbar.Snackbar
+import com.levifreire.hoteis.model.Hotel
+import com.levifreire.hoteis.repository.memory.MemoryRepository
+import com.levifreire.hoteis.R
 
 class HotelListFragment : ListFragment(), HotelListView, AdapterView.OnItemLongClickListener,
     ActionMode.Callback {

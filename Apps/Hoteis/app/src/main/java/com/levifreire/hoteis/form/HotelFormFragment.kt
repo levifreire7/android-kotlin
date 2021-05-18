@@ -1,4 +1,4 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.form
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,9 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import com.levifreire.hoteis.model.Hotel
+import com.levifreire.hoteis.repository.memory.MemoryRepository
+import com.levifreire.hoteis.R
 import com.levifreire.hoteis.databinding.FragmentHotelFormBinding
 
 class HotelFormFragment : DialogFragment(), HotelFormView {

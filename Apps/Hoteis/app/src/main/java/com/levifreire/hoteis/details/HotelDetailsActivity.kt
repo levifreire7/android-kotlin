@@ -1,9 +1,10 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.details
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.levifreire.hoteis.R
 
 class HotelDetailsActivity : AppCompatActivity() {
     private val hotelId: Long by lazy { intent.getLongExtra(EXTRA_HOTEL_ID, -1) }

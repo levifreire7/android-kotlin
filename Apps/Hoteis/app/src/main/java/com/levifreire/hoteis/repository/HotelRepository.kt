@@ -1,4 +1,6 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.repository
+
+import com.levifreire.hoteis.model.Hotel
 
 interface HotelRepository {
     fun save(hotel: Hotel)

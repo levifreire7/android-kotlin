@@ -1,4 +1,4 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.common
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import com.levifreire.hoteis.R
 
 class AboutDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

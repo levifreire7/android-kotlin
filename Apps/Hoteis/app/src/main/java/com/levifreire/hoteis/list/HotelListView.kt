@@ -1,4 +1,6 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.list
+
+import com.levifreire.hoteis.model.Hotel
 
 interface HotelListView {
     fun showHotels(hotels: List<Hotel>)

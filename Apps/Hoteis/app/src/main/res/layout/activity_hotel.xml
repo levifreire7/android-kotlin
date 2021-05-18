@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragmentList"
-        android:name="com.levifreire.hoteis.HotelListFragment"
+        android:name="com.levifreire.hoteis.list.HotelListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

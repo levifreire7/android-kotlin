@@ -1,4 +1,6 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.details
+
+import com.levifreire.hoteis.repository.HotelRepository
 
 class HotelDetailsPresenter(
     private val view: HotelDetailsView,

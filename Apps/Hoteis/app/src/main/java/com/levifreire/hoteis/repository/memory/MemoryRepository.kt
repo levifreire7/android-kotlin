@@ -1,4 +1,7 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.repository.memory
+
+import com.levifreire.hoteis.repository.HotelRepository
+import com.levifreire.hoteis.model.Hotel
 
 object MemoryRepository : HotelRepository {
     private var nextId = 1L

@@ -1,4 +1,4 @@
-package com.levifreire.hoteis
+package com.levifreire.hoteis.common
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,13 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import com.levifreire.hoteis.*
 import com.levifreire.hoteis.databinding.ActivityHotelBinding
+import com.levifreire.hoteis.details.HotelDetailsActivity
+import com.levifreire.hoteis.details.HotelDetailsFragment
+import com.levifreire.hoteis.form.HotelFormFragment
+import com.levifreire.hoteis.list.HotelListFragment
+import com.levifreire.hoteis.model.Hotel
 
 class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener,
     SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener,
