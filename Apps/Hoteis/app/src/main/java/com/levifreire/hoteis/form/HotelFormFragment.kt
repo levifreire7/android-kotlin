@@ -10,12 +10,13 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.levifreire.hoteis.model.Hotel
-import com.levifreire.hoteis.repository.memory.MemoryRepository
 import com.levifreire.hoteis.R
 import com.levifreire.hoteis.databinding.FragmentHotelFormBinding
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class HotelFormFragment : DialogFragment(), HotelFormView {
-    private val presenter = HotelFormPresenter(this, MemoryRepository)
+    private val presenter: HotelFormPresenter by inject { parametersOf(this) }
     private var fragmentHotelFormBinding: FragmentHotelFormBinding? = null
 
     override fun onCreateView(

@@ -7,12 +7,13 @@ import androidx.appcompat.widget.ShareActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import com.levifreire.hoteis.model.Hotel
-import com.levifreire.hoteis.repository.memory.MemoryRepository
 import com.levifreire.hoteis.R
 import com.levifreire.hoteis.databinding.FragmentHotelDetailsBinding
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class HotelDetailsFragment : Fragment(), HotelDetailsView {
-    private val presenter = HotelDetailsPresenter(this, MemoryRepository)
+    private val presenter: HotelDetailsPresenter by inject { parametersOf(this) }
     private var fragmentHotelDetailsBinding: FragmentHotelDetailsBinding? = null
     private var hotel: Hotel? = null
     private var shareActionProvider: ShareActionProvider? = null
