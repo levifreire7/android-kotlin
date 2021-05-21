@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.levifreire.hoteis.model.Hotel
 import com.levifreire.hoteis.R
 import com.levifreire.hoteis.databinding.FragmentHotelDetailsBinding
+import com.levifreire.hoteis.form.HotelFormFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -72,6 +73,15 @@ class HotelDetailsFragment : Fragment(), HotelDetailsView {
     override fun onDestroyView() {
         fragmentHotelDetailsBinding = null
         super.onDestroyView()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_edit) {
+            HotelFormFragment
+                .newInstance(hotel?.id ?: 0)
+                .open(parentFragmentManager)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

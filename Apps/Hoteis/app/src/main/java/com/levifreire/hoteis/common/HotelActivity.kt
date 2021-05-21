@@ -1,5 +1,7 @@
 package com.levifreire.hoteis.common
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -117,6 +119,11 @@ class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener
 
     override fun onHotelSaved(hotel: Hotel) {
         listFragment.search(lastSearchTerm)
+        val detailsFragment =
+            supportFragmentManager.findFragmentByTag(HotelDetailsFragment.TAG_DETAILS) as? HotelDetailsFragment
+        if (detailsFragment != null && hotel.id == hotelIdSelected) {
+            showDetailsFragment(hotelIdSelected)
+        }
     }
 
     override fun onHotelsDeleted(hotels: List<Hotel>) {
@@ -129,6 +136,13 @@ class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener
                     .remove(fragment)
                     .commit()
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            listFragment.search(lastSearchTerm)
         }
     }
 
