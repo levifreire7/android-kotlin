@@ -37,7 +37,6 @@ import com.example.android.guesstheword.screens.score.ScoreFragmentDirections
 class GameFragment : Fragment() {
 
     private lateinit var binding: GameFragmentBinding
-
     private lateinit var viewModel: GameViewModel
 
     override fun onCreateView(
@@ -46,18 +45,10 @@ class GameFragment : Fragment() {
     ): View {
 
         // Inflate view and obtain an instance of the binding class
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.game_fragment,
-            container,
-            false
-        )
+        binding = DataBindingUtil.inflate(inflater, R.layout.game_fragment, container, false)
 
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
-        binding.endGameButton.setOnClickListener { onEndGame() }
+        binding.gameViewModel = viewModel
 
         viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
             binding.scoreText.text = newScore.toString()
@@ -72,20 +63,6 @@ class GameFragment : Fragment() {
         })
 
         return binding.root
-    }
-
-    /** Methods for buttons presses **/
-
-    private fun onSkip() {
-        viewModel.onSkip()
-    }
-
-    private fun onCorrect() {
-        viewModel.onCorrect()
-    }
-
-    private fun onEndGame() {
-        gameFinished()
     }
 
     private fun gameFinished() {
