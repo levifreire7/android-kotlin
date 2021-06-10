@@ -34,8 +34,9 @@ import kotlinx.coroutines.withContext
  * @param sleepNightKey The key of the current night we are working on.
  */
 class SleepDetailViewModel(
-        private val sleepNightKey: Long = 0L,
-        dataSource: SleepDatabaseDao) : ViewModel() {
+    private val sleepNightKey: Long = 0L,
+    dataSource: SleepDatabaseDao
+) : ViewModel() {
 
     /**
      * Hold a reference to SleepDatabase via its SleepDatabaseDao.
@@ -48,7 +49,7 @@ class SleepDetailViewModel(
 
 
     init {
-        night=database.getNightWithId(sleepNightKey)
+        night = database.getNightWithId(sleepNightKey)
     }
 
     /**
