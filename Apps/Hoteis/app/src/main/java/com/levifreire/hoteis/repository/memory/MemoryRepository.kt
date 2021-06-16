@@ -60,7 +60,7 @@ object MemoryRepository : HotelRepository {
         val resultList =
             if (term.isEmpty()) hotelsList
             else hotelsList.filter {
-                it.name.toUpperCase().contains(term.toUpperCase())
+                it.name.uppercase().contains(term.uppercase())
             }
 
         callback(resultList.sortedBy { it.name })
