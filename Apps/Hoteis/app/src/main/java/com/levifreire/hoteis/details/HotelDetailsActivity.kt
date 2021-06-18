@@ -9,7 +9,7 @@ import com.levifreire.hoteis.R
 import com.levifreire.hoteis.form.HotelFormFragment
 import com.levifreire.hoteis.model.Hotel
 
-class HotelDetailsActivity : AppCompatActivity(), HotelFormFragment.OnHotelSavedListener {
+class HotelDetailsActivity : AppCompatActivity() {
     private val hotelId: Long by lazy { intent.getLongExtra(EXTRA_HOTEL_ID, -1) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,11 +26,6 @@ class HotelDetailsActivity : AppCompatActivity(), HotelFormFragment.OnHotelSaved
             .beginTransaction()
             .replace(R.id.details, fragment, HotelDetailsFragment.TAG_DETAILS)
             .commit()
-    }
-
-    override fun onHotelSaved(hotel: Hotel) {
-        setResult(RESULT_OK)
-        showHotelDetailsFragment()
     }
 
     companion object {
