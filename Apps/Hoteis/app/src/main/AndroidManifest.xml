@@ -12,9 +12,9 @@
         android:theme="@style/Theme.Fragments">
         <activity
             android:name="com.levifreire.hoteis.details.HotelDetailsActivity"
-            android:parentActivityName=".common.MainActivity" />
+            android:parentActivityName=".common.HotelActivity" />
         <activity
-            android:name="com.levifreire.hoteis.common.MainActivity"
+            android:name="com.levifreire.hoteis.common.HotelActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

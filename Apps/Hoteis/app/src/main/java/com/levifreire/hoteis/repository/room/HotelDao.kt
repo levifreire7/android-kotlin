@@ -3,9 +3,6 @@ package com.levifreire.hoteis.repository.room
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.levifreire.hoteis.model.Hotel
-import com.levifreire.hoteis.repository.sqlite.COLUMN_ID
-import com.levifreire.hoteis.repository.sqlite.COLUMN_NAME
-import com.levifreire.hoteis.repository.sqlite.TABLE_HOTEL
 
 @Dao
 interface HotelDao {

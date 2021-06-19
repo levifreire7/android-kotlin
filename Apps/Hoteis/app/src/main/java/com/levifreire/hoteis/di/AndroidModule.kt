@@ -1,36 +1,26 @@
 package com.levifreire.hoteis.di
 
-import com.levifreire.hoteis.details.HotelDetailsPresenter
-import com.levifreire.hoteis.details.HotelDetailsView
-import com.levifreire.hoteis.form.HotelFormPresenter
-import com.levifreire.hoteis.form.HotelFormView
-import com.levifreire.hoteis.list.HotelListPresenter
-import com.levifreire.hoteis.list.HotelListView
+import com.levifreire.hoteis.details.HotelDetailsViewModel
+import com.levifreire.hoteis.form.HotelFormViewModel
+import com.levifreire.hoteis.list.HotelListViewModel
 import com.levifreire.hoteis.repository.HotelRepository
-import com.levifreire.hoteis.repository.sqlite.SQLiteRepository
+import com.levifreire.hoteis.repository.room.HotelDatabase
+import com.levifreire.hoteis.repository.room.RoomRepository
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val androidModule = module {
     single { this }
     single {
-        SQLiteRepository(ctx = get()) as HotelRepository
+        RoomRepository(HotelDatabase.getDatabase(context = get())) as HotelRepository
     }
-    factory { (view: HotelListView) ->
-        HotelListPresenter(
-            view,
-            repository = get()
-        )
+    viewModel {
+        HotelListViewModel(repository = get())
     }
-    factory { (view: HotelDetailsView) ->
-        HotelDetailsPresenter(
-            view,
-            repository = get()
-        )
+    viewModel {
+        HotelDetailsViewModel(repository = get())
     }
-    factory { (view: HotelFormView) ->
-        HotelFormPresenter(
-            view,
-            repository = get()
-        )
+    viewModel {
+        HotelFormViewModel(repository = get())
     }
 }

@@ -3,8 +3,8 @@ package com.levifreire.hoteis.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.levifreire.hoteis.repository.sqlite.COLUMN_ID
-import com.levifreire.hoteis.repository.sqlite.TABLE_HOTEL
+import com.levifreire.hoteis.repository.room.COLUMN_ID
+import com.levifreire.hoteis.repository.room.TABLE_HOTEL
 
 @Entity(tableName = TABLE_HOTEL)
 data class Hotel(

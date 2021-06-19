@@ -1,7 +1,5 @@
 package com.levifreire.hoteis.common
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -14,17 +12,17 @@ import com.levifreire.hoteis.details.HotelDetailsActivity
 import com.levifreire.hoteis.details.HotelDetailsFragment
 import com.levifreire.hoteis.form.HotelFormFragment
 import com.levifreire.hoteis.list.HotelListFragment
+import com.levifreire.hoteis.list.HotelListViewModel
 import com.levifreire.hoteis.model.Hotel
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener,
-    SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener,
-    HotelFormFragment.OnHotelSavedListener, HotelListFragment.OnHotelDeletedListener {
+class HotelActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener,
+    SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
-    private var lastSearchTerm: String = ""
     private var searchView: SearchView? = null
     private val listFragment: HotelListFragment by lazy { supportFragmentManager.findFragmentById(R.id.fragmentList) as HotelListFragment }
-    private var hotelIdSelected: Long = -1
     private lateinit var binding: ActivityHotelBinding
+    private val viewModel: HotelListViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,21 +36,9 @@ class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putLong(EXTRA_HOTEL_ID_SELECTED, hotelIdSelected)
-        outState.putString(EXTRA_SEARCH_TERM, lastSearchTerm)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        hotelIdSelected = savedInstanceState.getLong(EXTRA_HOTEL_ID_SELECTED)
-        lastSearchTerm = savedInstanceState.getString(EXTRA_SEARCH_TERM) ?: ""
-    }
-
     override fun onHotelClick(hotel: Hotel) {
         if (isTablet()) {
-            hotelIdSelected = hotel.id
+            viewModel.hotelIdSelected = hotel.id
             showDetailsFragment(hotel.id)
         } else {
             showDetailsActivity(hotel.id)
@@ -82,9 +68,9 @@ class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener
         searchView = searchItem?.actionView as SearchView
         searchView?.queryHint = getString(R.string.hint_search)
         searchView?.setOnQueryTextListener(this)
-        if (lastSearchTerm.isNotEmpty()) {
+        if (viewModel.getSearchTerm()?.value?.isNotEmpty() == true) {
             Handler().post {
-                val query = lastSearchTerm
+                val query = viewModel.getSearchTerm()?.value
                 searchItem.expandActionView()
                 searchView?.setQuery(query, true)
                 searchView?.clearFocus()
@@ -104,50 +90,14 @@ class MainActivity : AppCompatActivity(), HotelListFragment.OnHotelClickListener
     override fun onQueryTextSubmit(query: String?) = true
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        lastSearchTerm = newText ?: ""
-        listFragment.search(lastSearchTerm)
+        listFragment.search(newText ?: "")
         return true
     }
 
     override fun onMenuItemActionExpand(item: MenuItem?) = true
 
     override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-        lastSearchTerm = ""
-        listFragment.clearSearch()
+        listFragment.search()
         return true
-    }
-
-    override fun onHotelSaved(hotel: Hotel) {
-        listFragment.search(lastSearchTerm)
-        val detailsFragment =
-            supportFragmentManager.findFragmentByTag(HotelDetailsFragment.TAG_DETAILS) as? HotelDetailsFragment
-        if (detailsFragment != null && hotel.id == hotelIdSelected) {
-            showDetailsFragment(hotelIdSelected)
-        }
-    }
-
-    override fun onHotelsDeleted(hotels: List<Hotel>) {
-        if (hotels.find { it.id == hotelIdSelected } != null) {
-            val fragment =
-                supportFragmentManager.findFragmentByTag(HotelDetailsFragment.TAG_DETAILS)
-            if (fragment != null) {
-                supportFragmentManager
-                    .beginTransaction()
-                    .remove(fragment)
-                    .commit()
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
-            listFragment.search(lastSearchTerm)
-        }
-    }
-
-    companion object {
-        const val EXTRA_SEARCH_TERM = "lastSearch"
-        const val EXTRA_HOTEL_ID_SELECTED = "lastSelectedID"
     }
 }

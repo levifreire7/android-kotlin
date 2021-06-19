@@ -1,4 +1,4 @@
-package com.levifreire.hoteis.repository.sqlite
+package com.levifreire.hoteis.repository.room
 
 const val DATABASE_NAME = "dbHotel"
 const val DATABASE_VERSION = 1
