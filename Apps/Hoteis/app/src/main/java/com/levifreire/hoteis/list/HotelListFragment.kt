@@ -21,7 +21,7 @@ class HotelListFragment : ListFragment(), AdapterView.OnItemLongClickListener,
     private val viewModel: HotelListViewModel by sharedViewModel()
     private var actionMode: ActionMode? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         listView.onItemLongClickListener = this
 

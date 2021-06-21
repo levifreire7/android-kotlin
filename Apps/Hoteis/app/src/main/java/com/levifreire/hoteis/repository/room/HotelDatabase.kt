@@ -27,6 +27,7 @@ abstract class HotelDatabase : RoomDatabase() {
                         DATABASE_NAME
                     )
                         .fallbackToDestructiveMigration()
+                        .allowMainThreadQueries()
                         .build()
 
                     INSTANCE = instance

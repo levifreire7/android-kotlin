@@ -1,6 +1,7 @@
 package com.levifreire.hoteis.form
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,6 +93,7 @@ class HotelFormFragment : DialogFragment() {
                 errorInvalidHotel()
             }
         } catch (e: Exception) {
+            Log.i("HotelFormFragment", e.message.toString())
             errorSaveHotel()
         }
     }
