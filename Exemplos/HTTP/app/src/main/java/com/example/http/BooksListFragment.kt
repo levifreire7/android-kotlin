@@ -30,13 +30,15 @@ class BooksListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = ArrayAdapter(
-            requireContext(), android.R.layout.simple_list_item_1,
-            booksList
-        )
+        adapter = BookListAdapter(requireContext(), booksList)
 
         binding.listView.emptyView = binding.txtMessage
         binding.listView.adapter = adapter
@@ -63,11 +65,6 @@ class BooksListFragment : Fragment() {
         }
         binding.txtMessage.visibility = if (show) View.VISIBLE else View.GONE
         binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun startDownloadJson() {
