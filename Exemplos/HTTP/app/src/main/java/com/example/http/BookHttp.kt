@@ -9,6 +9,8 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONException
 import org.json.JSONObject
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserFactory
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -20,6 +22,8 @@ import java.util.concurrent.TimeUnit
 object BookHttp {
     val BOOK_JSON_URL = "https://raw.githubusercontent.com/nglauber/" +
             "dominando_android3/master/livros_novatec.json"
+    val BOOKS_XML_URL = "https://raw.githubusercontent.com/nglauber/" +
+            "dominando_android3/master/livros_novatec.xml"
 
     fun hasConnection(ctx: Context): Boolean {
         val cm = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -30,21 +34,6 @@ object BookHttp {
             val info = cm.activeNetworkInfo
             info != null && info.isConnected
         }
-    }
-
-    fun loadBooks(): List<Book>? {
-        try {
-            val connection = connect(BOOK_JSON_URL)
-            val responseCode = connection.responseCode
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                val inputStream = connection.inputStream
-                val json = JSONObject(streamToString(inputStream))
-                return readBooksFromJson(json)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return null
     }
 
     fun loadBooksGson(): List<Book>? {
@@ -68,6 +57,79 @@ object BookHttp {
                     }
                     category.books
                 }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun loadBooksXml(): List<Book>? {
+        try {
+            val connection = connect(BOOKS_XML_URL)
+            val responseCode = connection.responseCode
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                val inputStream = connection.inputStream
+                return readBooksXml(inputStream)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    private fun readBooksXml(inputStream: InputStream): List<Book> {
+        val booksList = mutableListOf<Book>()
+        var book: Book? = null
+        var currentTag: String? = null
+        var currentCategory: String = ""
+        val factory = XmlPullParserFactory.newInstance()
+        val xpp = factory.newPullParser()
+        xpp.setInput(inputStream, "UTF-8")
+        var eventType = xpp.eventType
+
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            when (eventType) {
+                XmlPullParser.START_TAG -> {
+                    currentTag = xpp.name
+                    if ("livro" == currentTag) {
+                        book = Book()
+                        book.category = currentCategory
+                    }
+                }
+                XmlPullParser.END_TAG -> {
+                    if ("livro" == xpp.name) {
+                        booksList.add(book as Book)
+                    }
+                }
+                XmlPullParser.TEXT -> {
+                    if (!xpp.isWhitespace) {
+                        val text = xpp.text
+                        when (currentTag) {
+                            "titulo" -> book?.title = text
+                            "paginas" -> book?.pages = text.toInt()
+                            "capa" -> book?.coverUrl = text
+                            "autor" -> book?.author = text
+                            "ano" -> book?.year = text.toInt()
+                            "categoria" -> currentCategory = text
+                        }
+                    }
+                }
+            }
+            eventType = xpp.next()
+        }
+        return booksList
+    }
+
+
+    fun loadBooks(): List<Book>? {
+        try {
+            val connection = connect(BOOK_JSON_URL)
+            val responseCode = connection.responseCode
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                val inputStream = connection.inputStream
+                val json = JSONObject(streamToString(inputStream))
+                return readBooksFromJson(json)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
