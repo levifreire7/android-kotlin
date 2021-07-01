@@ -10,7 +10,7 @@ import com.example.http.databinding.FragmentBooksListBinding
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class BooksListFragment : Fragment(), CoroutineScope {
+class BooksListFragment : InternetFragment(), CoroutineScope {
     private val booksList = mutableListOf<Book>()
     private var adapter: ArrayAdapter<Book>? = null
     private var _binding: FragmentBooksListBinding? = null
@@ -57,16 +57,20 @@ class BooksListFragment : Fragment(), CoroutineScope {
         if (booksList.isNotEmpty()) {
             showProgress(false)
         } else {
-            if (downloadJob == null) {
-                if (BookHttp.hasConnection(requireContext())) {
-                    startDownloadJson()
-                } else {
-                    binding.progressBar.visibility = View.GONE
-                    binding.txtMessage.setText(R.string.error_no_connection)
-                }
-            } else if (downloadJob?.isActive == true) {
-                showProgress(true)
+            startDownload()
+        }
+    }
+
+    override fun startDownload() {
+        if (downloadJob == null) {
+            if (BookHttp.hasConnection(requireContext())) {
+                startDownloadJson()
+            } else {
+                binding.progressBar.visibility = View.GONE
+                binding.txtMessage.setText(R.string.error_no_connection)
             }
+        } else if (downloadJob?.isActive == true) {
+            showProgress(true)
         }
     }
 
@@ -81,7 +85,7 @@ class BooksListFragment : Fragment(), CoroutineScope {
     private fun startDownloadJson() {
         downloadJob = launch {
             showProgress(true)
-            val booksTask = withContext(Dispatchers.IO){
+            val booksTask = withContext(Dispatchers.IO) {
                 BookHttp.loadBooksGson()
             }
             updateBookList(booksTask)
