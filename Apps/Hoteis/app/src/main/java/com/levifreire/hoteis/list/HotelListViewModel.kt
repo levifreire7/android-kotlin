@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.levifreire.hoteis.common.SingleLiveEvent
 import com.levifreire.hoteis.model.Hotel
 import com.levifreire.hoteis.repository.HotelRepository
+import com.levifreire.hoteis.repository.http.Status
 
 class HotelListViewModel(private val repository: HotelRepository) : ViewModel() {
     var hotelIdSelected: Long = -1
@@ -73,7 +74,10 @@ class HotelListViewModel(private val repository: HotelRepository) : ViewModel() 
     }
 
     fun deleteSelected() {
-        repository.remove(*selectedItems.toTypedArray())
+        selectedItems.forEach {
+            it.status = Status.DELETE
+            repository.update(it)
+        }
         deletedItems.clear()
         deletedItems.addAll(selectedItems)
         setInDeleteMode(false)
