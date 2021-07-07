@@ -1,6 +1,8 @@
 package com.levifreire.hoteis.repository.http
 
 import com.levifreire.hoteis.model.Hotel
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -24,7 +26,13 @@ interface HotelHttpApi {
     @DELETE("$WEB_SERVICE/{user}/{hotelId}")
     fun delete(@Path("user") user: String, @Path("hotelId") id: Long): Call<IdResult>
 
+    @Multipart
+    @POST(UPLOAD)
+    fun uploadPhoto(@Part("id") hotelId: RequestBody, @Part file: MultipartBody.Part): Call<UploadResult>
+
+
     companion object {
         const val WEB_SERVICE = "webservice.php"
+        const val UPLOAD = "upload.php"
     }
 }
