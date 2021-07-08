@@ -30,7 +30,6 @@ interface HotelHttpApi {
     @POST(UPLOAD)
     fun uploadPhoto(@Part("id") hotelId: RequestBody, @Part file: MultipartBody.Part): Call<UploadResult>
 
-
     companion object {
         const val WEB_SERVICE = "webservice.php"
         const val UPLOAD = "upload.php"
