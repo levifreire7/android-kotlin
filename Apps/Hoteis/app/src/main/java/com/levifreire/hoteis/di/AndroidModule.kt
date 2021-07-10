@@ -1,8 +1,11 @@
 package com.levifreire.hoteis.di
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.levifreire.hoteis.details.HotelDetailsViewModel
 import com.levifreire.hoteis.form.HotelFormViewModel
+import com.levifreire.hoteis.imagefiles.FindHotelPicture
+import com.levifreire.hoteis.imagefiles.ImageGalleryPictureFinder
 import com.levifreire.hoteis.list.HotelListViewModel
 import com.levifreire.hoteis.repository.HotelRepository
 import com.levifreire.hoteis.repository.http.HotelHttp
@@ -36,9 +39,6 @@ val androidModule = module {
             .build()
         retrofit.create<HotelHttpApi>(HotelHttpApi::class.java)
     }
-    factory {
-        HotelHttp(service = get(), repository = get(), currentUser = "levi")
-    }
     viewModel {
         HotelListViewModel(repository = get())
     }
@@ -47,5 +47,14 @@ val androidModule = module {
     }
     viewModel {
         HotelFormViewModel(repository = get())
+    }
+    factory {
+        val context = get() as Context
+        val resolver = context.contentResolver
+        val uploadDir = context.externalCacheDir ?: context.cacheDir
+        ImageGalleryPictureFinder(uploadDir, resolver) as FindHotelPicture
+    }
+    factory {
+        HotelHttp(service = get(), repository = get(), pictureFinder = get(), currentUser = "levi")
     }
 }

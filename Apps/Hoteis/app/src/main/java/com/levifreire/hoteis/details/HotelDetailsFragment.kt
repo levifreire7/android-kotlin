@@ -7,10 +7,12 @@ import androidx.appcompat.widget.ShareActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.levifreire.hoteis.model.Hotel
 import com.levifreire.hoteis.R
 import com.levifreire.hoteis.databinding.FragmentHotelDetailsBinding
 import com.levifreire.hoteis.form.HotelFormFragment
+import com.levifreire.hoteis.repository.http.HotelHttp
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HotelDetailsFragment : Fragment() {
@@ -73,6 +75,14 @@ class HotelDetailsFragment : Fragment() {
         fragmentHotelDetailsBinding?.txtName?.text = hotel.name
         fragmentHotelDetailsBinding?.txtAddress?.text = hotel.address
         fragmentHotelDetailsBinding?.rtbRating?.rating = hotel.rating
+        var photoUrl = hotel.photoUrl
+        if (photoUrl.isNotEmpty()) {
+            if (!photoUrl.contains("content://")) {
+                photoUrl = HotelHttp.BASE_URL + hotel.photoUrl
+            }
+            Glide.with(fragmentHotelDetailsBinding!!.imgPhoto.context).load(photoUrl)
+                .into(fragmentHotelDetailsBinding!!.imgPhoto)
+        }
     }
 
     private fun errorHotelNotFound() {
